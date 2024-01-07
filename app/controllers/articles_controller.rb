@@ -31,13 +31,19 @@ class ArticlesController < ApplicationController
     end
 
     def update
-         @article = Article.find(params[:id])
+        @article = Article.find(params[:id])
         if @article.update(params.require(:article).permit(:title, :description))
         flash[:notice] = "Article was updated successfully."
         redirect_to @article
         else
             redirect_to edit_article_path, alert: @article.errors.full_messages.join(', ')
          end
+    end
+
+    def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to articles_path
     end
 
 end
